@@ -43,6 +43,7 @@ public class DatabaseWebSecurity {
 		http.authorizeHttpRequests(authorize -> authorize
 				.antMatchers("/bootstrap/**","/images/**","/tinymce/**","/logos/**").permitAll()
 				.antMatchers("/", "/signup", "/search", "/bcrypt/**", "/vacantes/view/**").permitAll()
+				.antMatchers("/solicitudes/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 				.antMatchers("/vacantes/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 				.antMatchers("/categorias/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 				.antMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")

@@ -3,6 +3,8 @@ package com.mamglez.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +40,13 @@ public class SolicitudesController {
 	
 	@Autowired
 	private ISolicitudesService solicitudesService;
+	
+	@GetMapping("/indexPaginate")
+	public String mostrarIndexPaginado(Model model, Pageable page) {
+		Page<Solicitud> lista = solicitudesService.buscarTodas(page);
+		model.addAttribute("solicitudes", lista);
+		return "solicitudes/listSolicitudes";
+	}
 	
 	@GetMapping("/create/{idVacante}")
 	public String crear(Solicitud solicitud, @PathVariable("idVacante") Integer idVacante, Model model) {
