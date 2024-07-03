@@ -1,14 +1,13 @@
 package com.mamglez.service;
 
-import java.awt.print.Pageable;
+
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import com.mamglez.model.Solicitud;
 
-@Service
 public interface ISolicitudesService {
 	
 	void guardar(Solicitud solicitud);
