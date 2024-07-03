@@ -41,7 +41,11 @@ public class DatabaseWebSecurity {
 		http.authorizeHttpRequests(authorize -> authorize
 				.antMatchers("/bootstrap/**","/images/**","/tinymce/**","/logos/**").permitAll()
 				.antMatchers("/", "/signup", "/search", "/vacantes/view/**").permitAll()
+				.antMatchers("/vacantes/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
+				.antMatchers("/categorias/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
+				.antMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
 				.anyRequest().authenticated());
+		http.formLogin(form -> form.permitAll());
 		return http.build();
 	}
 
