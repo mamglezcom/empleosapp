@@ -42,7 +42,7 @@ public class DatabaseWebSecurity {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(authorize -> authorize
 				.antMatchers("/bootstrap/**","/images/**","/tinymce/**","/logos/**").permitAll()
-				.antMatchers("/", "/signup", "/search", "/vacantes/view/**").permitAll()
+				.antMatchers("/", "/signup", "/search", "/bcrypt/**", "/vacantes/view/**").permitAll()
 				.antMatchers("/vacantes/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 				.antMatchers("/categorias/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 				.antMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
