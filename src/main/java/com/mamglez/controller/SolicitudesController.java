@@ -1,7 +1,9 @@
 package com.mamglez.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mamglez.model.Solicitud;
+import com.mamglez.model.Usuario;
 import com.mamglez.model.Vacante;
+import com.mamglez.service.IUsuariosService;
 import com.mamglez.service.IVacantesService;
 import com.mamglez.util.Utileria;
 
@@ -27,6 +31,9 @@ public class SolicitudesController {
 	@Autowired
 	private IVacantesService serviceVacantes;
 	
+	@Autowired
+	private IUsuariosService serviceUsuario;
+	
 	@GetMapping("/create/{idVacante}")
 	public String crear(Solicitud solicitud, @PathVariable("idVacante") Integer idVacante, Model model) {
 		Vacante vacante = serviceVacantes.buscarPorId(idVacante);
@@ -36,7 +43,11 @@ public class SolicitudesController {
 	}
 	
 	@PostMapping("/save")
-	public String guardar(Solicitud solicitud, BindingResult result, @RequestParam("archivoCV") MultipartFile multipart) {
+	public String guardar(Solicitud solicitud, BindingResult result, 
+			@RequestParam("archivoCV") MultipartFile multipart, Authentication authentication) {
+		
+		String username = authentication.getName();
+		
 		if(result.hasErrors()) {
 			System.out.println("Existen errores");
 			return "solicitudes/formSolicitud";
@@ -48,6 +59,10 @@ public class SolicitudesController {
 				solicitud.setArchivo(nombreArchivo);
 			}
 		}
+		
+		Usuario usuario = serviceUsuario.buscarPorUsername(username);
+		solicitud.setUsuario(usuario);
+		
 		System.out.println(solicitud);
 		return "redirect:/";
 	}
