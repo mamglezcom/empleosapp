@@ -56,6 +56,11 @@ public class HomeController {
 		return "formRegistro";
 	}
 	
+	@GetMapping("/login")
+	public String mostrarLogin() {
+		return "formLogin";
+	}
+	
 	@GetMapping("/index")
 	public String mostrarIndex(Authentication auth, HttpSession session) {
 		String username = auth.getName();

@@ -47,7 +47,7 @@ public class DatabaseWebSecurity {
 				.antMatchers("/categorias/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 				.antMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
 				.anyRequest().authenticated());
-		http.formLogin(form -> form.permitAll());
+		http.formLogin(form -> form.loginPage("/login").permitAll());
 		
 		return http.build();
 	}
