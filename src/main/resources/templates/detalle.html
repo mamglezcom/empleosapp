@@ -33,6 +33,11 @@
             <div class="card">
               <h4 class="card-header">Aplicar para <strong th:text="${vacante.nombre}"></strong></h4>              
               <div class="card-body">
+				  
+              <div class="alert alert-danger" role="alert" sec:authorize="isAnonymous()">
+				  ¿Te interesa esta vacante? <strong>Registrate</strong> y después ingresa para enviar tu CV.
+			  </div>
+				  
                 <h5 class="card-title"><strong>Categoría: </strong> <span th:text="${vacante.categoria.nombre}"></span></h5>
                 <h6 class="card-title"><strong>Publicado: </strong> <span th:text="${#dates.format(vacante.fecha, 'dd-MM-yyyy')}"></span></h6>                
                 <h6 class="card-title"><strong>Salario Ofrecido: </strong><span th:text="${vacante.salario}"></span></h6>
@@ -44,7 +49,7 @@
                     <p class="card-text" th:utext="${vacante.detalles}"></p>
                   </div>
                 </div>   
-                <a class="btn btn-primary" href="#" role="button" title="Quiero aplicar para esta oferta de trabajo."><i class="fas fa-file" aria-hidden="true"></i> Aplicar</a>                            
+                <a sec:authorize="isAuthenticated() and hasAnyAuthority('USUARIO')" class="btn btn-primary" href="#" role="button" title="Quiero aplicar para esta oferta de trabajo."><i class="fas fa-file" aria-hidden="true"></i> Aplicar</a>                            
               </div>
             </div>  
           </div>
