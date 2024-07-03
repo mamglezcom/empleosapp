@@ -37,12 +37,13 @@
                 <h6 class="card-title"><strong>Salario Ofrecido: </strong><span th:text="${vacante.salario}"></span></h6>
                 <p class="card-text" th:text="${vacante.descripcion}"></p>
                 <hr>
-                <form>                                                 
+                <form th:action="@{/solicitudes/save}" th:object="${solicitud}" method="post" enctype="multipart/form-data">                                                 
                   <div class="row">
                     <div class="col-md-6"> 
                       <div class="form-group">
+						  <input type="hidden" th:name="vacante.id" th:value="${vacante.id}" />
                         <label for="comentarios">Comentarios</label>
-                        <textarea class="form-control" name="comentarios" id="comentarios" rows="2"></textarea>
+                        <textarea class="form-control" th:field="*{comentarios}" rows="2"></textarea>
                       </div> 
                     </div> 
                     <div class="col-md-6"> 
