@@ -2,9 +2,11 @@ package com.mamglez.controller;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -48,12 +51,20 @@ public class HomeController {
 	}
 	
 	@GetMapping("/index")
-	public String mostrarIndex(Authentication auth) {
+	public String mostrarIndex(Authentication auth, HttpSession session) {
 		String username = auth.getName();
 		System.out.println("nombre de usuario: " + username);
-		for(GrantedAuthority rol : auth.getAuthorities()) {
+		for(GrantedAuthority rol : auth.getAuthorities()) { 
 			System.out.println("Rol: " + rol.getAuthority());
 		}
+		
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = serviceUsuarios.buscarPorUsername(username);
+			usuario.setPassword(null);
+			System.out.println("usuario: " + usuario);
+			session.setAttribute("usuario", usuario);
+		}
+		
 		return "redirect:/";
 	}
 	
