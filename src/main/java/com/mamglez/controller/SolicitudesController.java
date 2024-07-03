@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mamglez.model.Solicitud;
 import com.mamglez.model.Usuario;
 import com.mamglez.model.Vacante;
+import com.mamglez.service.ISolicitudesService;
 import com.mamglez.service.IUsuariosService;
 import com.mamglez.service.IVacantesService;
 import com.mamglez.util.Utileria;
@@ -34,6 +36,9 @@ public class SolicitudesController {
 	@Autowired
 	private IUsuariosService serviceUsuario;
 	
+	@Autowired
+	private ISolicitudesService solicitudesService;
+	
 	@GetMapping("/create/{idVacante}")
 	public String crear(Solicitud solicitud, @PathVariable("idVacante") Integer idVacante, Model model) {
 		Vacante vacante = serviceVacantes.buscarPorId(idVacante);
@@ -44,7 +49,7 @@ public class SolicitudesController {
 	
 	@PostMapping("/save")
 	public String guardar(Solicitud solicitud, BindingResult result, 
-			@RequestParam("archivoCV") MultipartFile multipart, Authentication authentication) {
+			@RequestParam("archivoCV") MultipartFile multipart, Authentication authentication, RedirectAttributes attributes) {
 		
 		String username = authentication.getName();
 		
@@ -62,6 +67,9 @@ public class SolicitudesController {
 		
 		Usuario usuario = serviceUsuario.buscarPorUsername(username);
 		solicitud.setUsuario(usuario);
+		
+		solicitudesService.guardar(solicitud);
+		attributes.addFlashAttribute("msg", "Gracias por enviar el CV");
 		
 		System.out.println(solicitud);
 		return "redirect:/";

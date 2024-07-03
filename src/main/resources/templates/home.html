@@ -42,6 +42,7 @@
 
       <div class="container"> 
         <h2 class="font-weight-bold text-center text-capitalize">DESTACADOS</h2>
+        <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
         <hr>
         <div th:each="vacante : ${vacantes}" class="row">
           <div class="col-md-3">            
