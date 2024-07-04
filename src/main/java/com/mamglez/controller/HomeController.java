@@ -109,7 +109,7 @@ public class HomeController {
 				
 		attributes.addFlashAttribute("msg", "El registro fue guardado correctamente!");
 		
-		return "redirect:/usuarios/index";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/tabla")
