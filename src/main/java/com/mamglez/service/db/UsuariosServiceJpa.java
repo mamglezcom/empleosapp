@@ -2,8 +2,11 @@ package com.mamglez.service.db;
 
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mamglez.model.Usuario;
 import com.mamglez.repository.UsuariosRepository;
@@ -34,6 +37,20 @@ public class UsuariosServiceJpa implements IUsuariosService {
 	@Override
 	public Usuario buscarPorUsername(String username) {
 		return usuariosRepo.findByUsername(username);
+	}
+	
+	@Transactional
+	@Override
+	public int bloquear(int idUsuario) {
+		int rows = usuariosRepo.lock(idUsuario);
+		return rows;
+	}
+
+	@Transactional
+	@Override
+	public int activar(int idUsuario) {
+		int rows = usuariosRepo.unlock(idUsuario);
+		return rows;
 	}
 
 }

@@ -12,4 +12,8 @@ public interface IUsuariosService {
 	List<Usuario> buscarTodos();
 	
 	Usuario buscarPorUsername(String username);
+	
+	int bloquear(int idUsuario);
+	
+	int activar(int idUsuario);
 }
