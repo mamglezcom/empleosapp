@@ -20,6 +20,12 @@ public class UsuariosController {
 	@Autowired
 	private IUsuariosService serviceUsuarios;
     
+	/**
+	 * Metodo que muestra la lista de usuarios sin paginacion
+	 * @param model
+	 * @param page
+	 * @return
+	 */
 	@GetMapping("/index")
 	public String mostrarIndex(Model model) {
     	List<Usuario> lista = serviceUsuarios.buscarTodos();
@@ -27,6 +33,12 @@ public class UsuariosController {
 		return "usuarios/listUsuarios";
 	}
     
+	/**
+     * Método para eliminar un usuario de la base de datos.
+     * @param idUsuario
+     * @param attributes
+     * @return
+     */
 	@GetMapping("/delete/{id}")
 	public String eliminar(@PathVariable("id") int idUsuario, RedirectAttributes attributes) {		    	
 		// Eliminamos el usuario
