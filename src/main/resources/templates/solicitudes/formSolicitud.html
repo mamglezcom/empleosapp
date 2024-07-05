@@ -30,9 +30,10 @@
           </div>
           <div class="col-md-9">
             <div class="card">
+				<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
               <h4 class="card-header"><strong>Aplicar para la vacante <span th:text="${vacante.nombre}"></span></strong></h4>              
               <div class="card-body">
-                <h5 class="card-title"><strong>Categoría: </strong><span  th:text="${vacante.categoria.nombre}"></span></h5>
+                <h5 class="card-title"><strong>Categoría: </strong><span  th:text="${vacante.categoria != null ? vacante.categoria.nombre : 'No Categorizado'}"></span></h5>
                 <h6 class="card-title"><strong>Publicado: </strong><span th:text="${#dates.format(vacante.fecha, 'dd-MM-yyy')}"></span></h6>
                 <h6 class="card-title"><strong>Salario Ofrecido: </strong><span th:text="${vacante.salario}"></span></h6>
                 <p class="card-text" th:text="${vacante.descripcion}"></p>
@@ -42,6 +43,7 @@
                     <div class="col-md-6"> 
                       <div class="form-group">
 						  <input type="hidden" th:name="vacante.id" th:value="${vacante.id}" />
+						  <input type="hidden" th:name="vacante.nombre" th:value="${vacante.nombre}" />
                         <label for="comentarios">Comentarios</label>
                         <textarea class="form-control" th:field="*{comentarios}" rows="2"></textarea>
                       </div> 

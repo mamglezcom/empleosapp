@@ -15,5 +15,6 @@ public interface ISolicitudesService {
 	List<Solicitud> buscarTodas();
 	Solicitud buscarPorId(Integer idSolicitud);
 	Page<Solicitud> buscarTodas(Pageable page);
+	boolean existeSolicitud(int idUsuario, int idVacante);
 
 }

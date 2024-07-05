@@ -58,7 +58,8 @@ public class SolicitudesController {
 	
 	@PostMapping("/save")
 	public String guardar(Solicitud solicitud, BindingResult result, 
-			@RequestParam("archivoCV") MultipartFile multipart, Authentication authentication, RedirectAttributes attributes) {
+			@RequestParam("archivoCV") MultipartFile multipart, 
+			Authentication authentication, RedirectAttributes attributes) {
 		
 		String username = authentication.getName();
 		
@@ -76,6 +77,13 @@ public class SolicitudesController {
 		
 		Usuario usuario = serviceUsuario.buscarPorUsername(username);
 		solicitud.setUsuario(usuario);
+		
+		// Verifica si ya existe una solicitud para este usuario y esta vacante
+	    if (solicitudesService.existeSolicitud(usuario.getId(), solicitud.getVacante().getId())) {
+	        // Si existe, agregar un mensaje de error y regresar al formulario
+	    	attributes.addFlashAttribute("error", "Ya has aplicado anteriormente a "+solicitud.getVacante().getNombre());
+	        return "redirect:/";
+	    }
 		
 		solicitudesService.guardar(solicitud);
 		attributes.addFlashAttribute("msg", "Gracias por enviar el CV");

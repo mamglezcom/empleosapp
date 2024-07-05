@@ -28,11 +28,11 @@ public class DatabaseWebSecurity {
 	@Bean
 	public UserDetailsManager usersCustom(DataSource dataSource) {
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-		users.setUsersByUsernameQuery("select username,password,estatus from Usuarios u where username=?");
+		users.setUsersByUsernameQuery("select username,password,estatus from usuarios u where username=?");
 		users.setAuthoritiesByUsernameQuery(
-				"select u.username,p.perfil from UsuarioPerfil up " + 
-				"inner join Usuarios u on u.id = up.idUsuario " +
-				"inner join Perfiles p on p.id = up.idPerfil " + "where u.username=?");
+				"select u.username,p.perfil from usuarioperfil up " + 
+				"inner join usuarios u on u.id = up.idUsuario " +
+				"inner join perfiles p on p.id = up.idPerfil " + "where u.username=?");
 		
 		return users;
 		

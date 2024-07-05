@@ -42,14 +42,14 @@
               </thead>
               <tbody>
                 <tr th:each="sol : ${solicitudes}">
-                  <td th:text="${sol.vacante.categoria.nombre}"></td>
+                  <td th:text="${sol.vacante.categoria != null ? sol.vacante.categoria.nombre : 'No Categorizado'}"></td>
                   <td th:text="${sol.vacante.nombre}"></td>
                   <td th:text="${sol.usuario.nombre}"></td>
                   <td th:text="${sol.fecha}"></td>
                   <td>
-                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar el registro."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+<!--                    <a href="#" class="btn btn-success btn-sm" role="button" title="Editar el registro."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>-->
                     <a th:href="@{/solicitudes/delete/{id} (id=${sol.id})}" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar el registro."><i class="fas fa-trash" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-success btn-sm" role="button" title="Enviar correo electrónico al usuario."><i class="fas fa-envelope" aria-hidden="true"></i></a>
+<!--                    <a href="#" class="btn btn-success btn-sm" role="button" title="Enviar correo electrónico al usuario."><i class="fas fa-envelope" aria-hidden="true"></i></a>-->
                     <a th:href="@{/cv/{archivo} (archivo=${sol.archivo})}" target="_blank" class="btn btn-success btn-sm" role="button" title="Descargar Curriculm Vitae."><i class="fas fa-download" aria-hidden="true"></i></a>
                   </td>
                 </tr>

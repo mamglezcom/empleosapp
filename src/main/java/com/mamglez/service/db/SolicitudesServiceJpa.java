@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mamglez.model.Solicitud;
+import com.mamglez.model.Usuario;
+import com.mamglez.model.Vacante;
 import com.mamglez.repository.SolicitudesRepository;
 import com.mamglez.service.ISolicitudesService;
 
@@ -47,5 +49,14 @@ public class SolicitudesServiceJpa implements ISolicitudesService {
 	public Page<Solicitud> buscarTodas(Pageable page){
 		return solicitudesRepo.findAll(page);
 	}
+	
+	@Override
+    public boolean existeSolicitud(int idUsuario, int idVacante) {
+		Usuario usuario = new Usuario();
+        usuario.setId(idUsuario);
+        Vacante vacante = new Vacante();
+        vacante.setId(idVacante);
+        return solicitudesRepo.existsByUsuarioAndVacante(usuario, vacante);
+    }
 
 }
