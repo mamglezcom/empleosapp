@@ -59,4 +59,12 @@ public class SolicitudesServiceJpa implements ISolicitudesService {
         return solicitudesRepo.existsByUsuarioAndVacante(usuario, vacante);
     }
 
+	@Override
+	public List<Solicitud> buscarTodasPorUsuario(int idUsuario) {
+		Usuario usuario = new Usuario();
+		usuario.setId(idUsuario);
+		return solicitudesRepo.findAllByUsuario(usuario);
+		 
+	}
+
 }

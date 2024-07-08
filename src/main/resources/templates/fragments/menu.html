@@ -17,7 +17,15 @@
         </li>
         <li class="nav-item" sec:authorize="hasAnyAuthority('ADMINISTRADOR')">
 	      <a class="nav-link active" th:href="@{/usuarios/index}" >Usuarios</a>
-	  	</li>         
+	  	</li>   
+	  	<li class="nav-item" sec:authorize="hasAnyAuthority('USUARIO')">
+    <div th:if="${session.usuario != null}">
+        <a class="nav-link active" th:href="@{/solicitudes/aplicadas/{id}(id=${session.usuario.id})}">Aplicadas</a>
+    </div>
+    <div th:unless="${session.usuario != null}">
+    </div>
+</li>
+       
       </ul>  
       <div sec:authorize="isAnonymous()">  
 		<a class="btn btn-primary" th:href="@{/index}">Entrar</a>&nbsp; 

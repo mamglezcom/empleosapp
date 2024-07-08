@@ -1,6 +1,8 @@
 package com.mamglez.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -97,6 +99,16 @@ public class SolicitudesController {
 		solicitudesService.eliminar(idSolicitud);
 		attributes.addFlashAttribute("msg", "Solicitud eliminada");
 		return "redirect:/solicitudes/indexPaginate";
+	}
+	
+	@GetMapping("/aplicadas/{id}")
+	public String buscarPorUsuario(@PathVariable("id") int idUsuario, Model model) {
+		List<Solicitud> solicitudes = solicitudesService.buscarTodasPorUsuario(idUsuario);
+		for(Solicitud sol : solicitudes) {
+			System.out.println(sol);
+		}
+		model.addAttribute("aplicadas", solicitudes);
+		return "solicitudes/listAplicadas";
 	}
 
 }

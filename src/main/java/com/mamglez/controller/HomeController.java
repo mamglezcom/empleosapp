@@ -67,7 +67,7 @@ public class HomeController {
 	public String logout(HttpServletRequest request) {
 		SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 		logoutHandler.logout(request, null, null);
-		return "redirect:/login";
+		return "redirect:/index";
 	}
 	
 	@GetMapping("/index")
