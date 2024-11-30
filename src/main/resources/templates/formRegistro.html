@@ -24,11 +24,16 @@
     <main role="main">     
       <hr>
       <div class="container"> 
-
+<div id="emailError" class="alert alert-danger" style="display: none;">
+    Por favor, ingrese un correo válido (ej: usuario@dominio.com).
+  </div>
         <div class="card">
           <h4 class="card-header"><strong>Formulario de registro</strong></h4>              
           <div class="card-body">
-            <form th:action="@{/signup}" th:object="${usuario}" method="post">              
+            <form th:action="@{/signup}" th:object="${usuario}" method="post" id="registrationForm">    
+				<div id="emailError" class="invalid-feedback" style="display: none;">
+    Por favor, ingrese un correo válido (ej: usuario@dominio.com).
+  </div>          
               <div class="row">
                 <div class="col-md-3"> 
                   <div class="form-group">
@@ -72,6 +77,34 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> 
-    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>     
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script> 
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const emailInput = document.getElementById("email");
+    const emailError = document.getElementById("emailError");
+    const registrationForm = document.getElementById("registrationForm");
+
+    // Expresión regular para validar correos electrónicos
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Validación al enviar el formulario
+    registrationForm.addEventListener("submit", function (event) {
+      const emailValue = emailInput.value;
+
+      if (!emailPattern.test(emailValue)) {
+        // Detener el envío del formulario y mostrar el error
+        event.preventDefault();
+        emailInput.classList.add("is-invalid");
+        emailError.style.display = "block";
+      } else {
+        // Si el correo es válido, asegurarse de que el error esté oculto
+        emailInput.classList.remove("is-invalid");
+        emailError.style.display = "none";
+      }
+    });
+  });
+</script>
+
+    
   </body>
 </html>

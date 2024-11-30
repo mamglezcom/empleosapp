@@ -39,6 +39,9 @@
                 <p class="card-text" th:text="${vacante.descripcion}"></p>
                 <hr>
                 <form th:action="@{/solicitudes/save}" th:object="${solicitud}" method="post" enctype="multipart/form-data">                                                 
+                  <div id="archivoCVError" class="alert alert-danger" style="display: none;">
+				    Por favor, seleccione un archivo antes de enviar el formulario.
+				  </div>
                   <div class="row">
                     <div class="col-md-6"> 
                       <div class="form-group">
@@ -75,6 +78,43 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>     
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>  
+	<script>
+	  document.addEventListener("DOMContentLoaded", function () {
+	    const archivoInput = document.getElementById("archivoCV");
+	    const archivoError = document.getElementById("archivoCVError");
+	    const form = document.querySelector("form");
+	
+	    // Extensiones permitidas
+	    const validExtensions = ['pdf', 'doc', 'docx'];
+	
+	    // Validación al enviar el formulario
+	    form.addEventListener("submit", function (event) {
+	      const archivoValue = archivoInput.value;
+	
+	      if (!archivoValue) {
+	        // Si no se selecciona ningún archivo
+	        event.preventDefault();
+	        archivoInput.classList.add("is-invalid");
+	        archivoError.textContent = "Por favor, seleccione un archivo.";
+	        archivoError.style.display = "block";
+	      } else {
+	        // Validar extensión del archivo
+	        const archivoExtension = archivoValue.split('.').pop().toLowerCase();
+	        if (!validExtensions.includes(archivoExtension)) {
+	          event.preventDefault();
+	          archivoInput.classList.add("is-invalid");
+	          archivoError.textContent = "Archivo no válido. Solo se permiten archivos pdf, doc o docx.";
+	          archivoError.style.display = "block";
+	        } else {
+	          // Si el archivo es válido, eliminar errores
+	          archivoInput.classList.remove("is-invalid");
+	          archivoError.style.display = "none";
+	        }
+	      }
+	    });
+	  });
+	</script>
+  
   </body>
 </html>
