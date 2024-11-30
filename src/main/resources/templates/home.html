@@ -27,7 +27,7 @@
       <div class="jumbotron">
         <div class="container">
           <h3>Encuentra el trabajo que estás buscando.</h3>
-          Puedes buscar por descripción y categoría.
+          Puedes buscar por descripción y/o categoría.
           <form class="form-inline" th:object="${search}" th:action="@{/search}" method="get">
             <input type="text" class="form-control mb-3" th:field="*{descripcion}" id="exampleFormControlInput1" placeholder="Escriba una búsqueda">&nbsp;
             <select class="custom-select custom-select mb-3" th:field="*{categoria.id}">
